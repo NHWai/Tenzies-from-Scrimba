@@ -91,7 +91,7 @@ function App() {
           {tenzies ? "New Game" : "Roll"}
         </button>
         <h2>
-          Best Score : {prevScore} <span>current score: {score}</span>
+          Best Score : {prevScore} <span>//Current score: {score}</span>
         </h2>
       </main>
     );
