@@ -8,7 +8,8 @@ function App() {
   const [tenzies, setTenzies] = React.useState(false);
   const [start, setStart] = React.useState(false);
   const [score, setScore] = React.useState(0);
-  const prevScore = JSON.parse(localStorage.getItem("Score"));
+  // const [bestscore, setBestscore] = React.useState(0);
+  const prevScore = JSON.parse(localStorage.getItem("Score")) || 0;
   console.log(score);
   React.useEffect(() => {
     const allHeld = dice.every((el) => el.isHeld);
@@ -16,7 +17,12 @@ function App() {
     const sameVal = dice.every((el) => el.value === firstValue);
     if (allHeld && sameVal) {
       setTenzies(true);
-      score < prevScore && localStorage.setItem("Score", JSON.stringify(score));
+      // score < prevScore && localStorage.setItem("Score", JSON.stringify(score));
+      prevScore === 0 && localStorage.setItem("Score", JSON.stringify(score));
+      setScore(0);
+      score < prevScore &&
+        prevScore !== 0 &&
+        localStorage.setItem("Score", JSON.stringify(score));
       setScore(0);
     }
   }, [dice]);
@@ -47,6 +53,7 @@ function App() {
             : dice;
         })
       );
+
       setScore((pre) => pre + 1);
     } else {
       allNew();
@@ -83,7 +90,9 @@ function App() {
         <button onClick={diceRoll} className="btn rollDice">
           {tenzies ? "New Game" : "Roll"}
         </button>
-        <h2>Best Score : {prevScore}</h2>
+        <h2>
+          Best Score : {prevScore} <span>current score: {score}</span>
+        </h2>
       </main>
     );
   } else {
